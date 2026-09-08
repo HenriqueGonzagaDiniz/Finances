@@ -1,5 +1,7 @@
 # Finances 💰
 
+[![Site ao vivo](https://img.shields.io/badge/testar_online-GitHub_Pages-0d631b)](https://henriquegonzagadiniz.github.io/Finances)
+
 Um **organizador financeiro pessoal minimalista** que roda 100% no navegador — sem banco de dados externo, sem nuvem, sem custo. Feito com React + TypeScript + Tailwind CSS e empacotado como **PWA** (instalável e offline).
 
 ## ✨ Funcionalidades
@@ -14,7 +16,15 @@ Um **organizador financeiro pessoal minimalista** que roda 100% no navegador —
 - **Lazy loading** das rotas e `useMemo` nos cálculos para desempenho
 - PWA instalável, mobile-first
 
-## 🚀 Como rodar
+## 🚀 Testar online
+
+O app está publicado no **GitHub Pages** — teste sem instalar nada:
+
+👉 **https://henriquegonzagadiniz.github.io/Finances**
+
+O deploy acontece automaticamente a cada `push` para a branch `main` (via GitHub Actions).
+
+## 🚀 Como rodar localmente
 
 ```bash
 npm install

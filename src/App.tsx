@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { FinancialProvider } from '@/contexts/FinancialContext';
 import { OnboardingLayout } from '@/layouts/OnboardingLayout';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
@@ -30,7 +30,7 @@ function PageLoader() {
 
 export function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <FinancialProvider>
         <Suspense fallback={<PageLoader />}>
           <Routes>
@@ -111,6 +111,6 @@ export function App() {
           </Routes>
         </Suspense>
       </FinancialProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
