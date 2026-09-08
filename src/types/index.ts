@@ -63,3 +63,16 @@ export interface FinancialSummary {
 export interface AppSettings {
   onboardingCompleted: boolean;
 }
+
+export type TransactionType = 'income' | 'expense';
+
+export interface Transaction {
+  id: string;
+  type: TransactionType;
+  amount: number;
+  category: string;
+  icon?: string;
+  date: string;
+  month: string;
+  note?: string;
+}

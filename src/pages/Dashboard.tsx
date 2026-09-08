@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFinancial } from '@/hooks/useFinancial';
 import { Header } from '@/components/Header';
@@ -9,8 +9,15 @@ import { ProgressBar } from '@/components/ProgressBar';
 import { SideMenu } from '@/components/SideMenu';
 import { formatCurrency } from '@/utils/format';
 import { calculateSummary } from '@/utils/financial';
+import {
+  currentMonthKey,
+  filterByMonth,
+  sumIncome,
+  sumExpenses,
+  monthLabel,
+} from '@/utils/transactions';
 
-export function Dashboard() {
+export default function Dashboard() {
   const {
     monthlyData,
     goals,
@@ -19,12 +26,22 @@ export function Dashboard() {
     restorePlan,
     deleteSavedPlan,
     resetAll,
+    transactions,
+    transactionsLoaded,
   } = useFinancial();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const mainGoal = goals[0];
 
-  const summary = calculateSummary(monthlyData.income, monthlyData.expenses, mainGoal);
+  const summary = useMemo(
+    () => calculateSummary(monthlyData.income, monthlyData.expenses, mainGoal),
+    [monthlyData.income, monthlyData.expenses, mainGoal],
+  );
+
+  const monthTx = useMemo(() => filterByMonth(transactions, currentMonthKey()), [transactions]);
+  const monthIncome = useMemo(() => sumIncome(monthTx), [monthTx]);
+  const monthExpenses = useMemo(() => sumExpenses(monthTx), [monthTx]);
+  const monthBalance = monthIncome - monthExpenses;
 
   return (
     <>
@@ -35,7 +52,44 @@ export function Dashboard() {
             <p className="font-headline-md text-headline-md text-on-surface mt-1">
               {formatCurrency(summary.totalIncome)}/mês
             </p>
-            {mainGoal && (
+{transactionsLoaded && (
+        <section className="mt-base mb-md">
+          <div className="flex items-center justify-between mb-sm">
+            <h3 className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+              {monthLabel(currentMonthKey())}
+            </h3>
+            <span className="font-label-sm text-label-sm text-primary">
+              {monthTx.length} lançamento{monthTx.length === 1 ? '' : 's'}
+            </span>
+          </div>
+          <div className="grid grid-cols-3 gap-2">
+            <div className="bg-primary-container/15 rounded-xl p-sm flex flex-col items-center">
+              <span className="font-label-sm text-label-sm text-on-surface-variant">Entradas</span>
+              <span className="font-headline-md text-headline-md text-primary mt-1">
+                {formatCurrency(monthIncome)}
+              </span>
+            </div>
+            <div className="bg-error/10 rounded-xl p-sm flex flex-col items-center">
+              <span className="font-label-sm text-label-sm text-on-surface-variant">Saídas</span>
+              <span className="font-headline-md text-headline-md text-error mt-1">
+                {formatCurrency(monthExpenses)}
+              </span>
+            </div>
+            <div className="bg-secondary-container/30 rounded-xl p-sm flex flex-col items-center">
+              <span className="font-label-sm text-label-sm text-on-surface-variant">Saldo</span>
+              <span
+                className={`font-headline-md text-headline-md mt-1 ${
+                  monthBalance >= 0 ? 'text-on-secondary-container' : 'text-error'
+                }`}
+              >
+                {formatCurrency(monthBalance)}
+              </span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {mainGoal && (
               <p className="font-label-sm text-label-sm text-on-surface-variant mt-1">
                 Meta: {mainGoal.name} · {formatCurrency(summary.monthlySavingCapacity)}/mês
               </p>

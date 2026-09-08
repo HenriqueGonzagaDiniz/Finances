@@ -55,3 +55,5 @@ export function Income() {
     </div>
   );
 }
+
+export default Income;

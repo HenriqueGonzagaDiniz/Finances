@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import type { MonthlyData, Goal, AppSettings, Expense, SavedPlan } from '@/types';
+import type { MonthlyData, Goal, AppSettings, Expense, SavedPlan, Transaction } from '@/types';
 import { storage } from '@/services/storage';
+import { db } from '@/services/db';
 import { STORAGE_KEYS } from '@/constants';
 
 export interface FinancialContextType {
@@ -8,6 +9,8 @@ export interface FinancialContextType {
   goals: Goal[];
   settings: AppSettings;
   savedPlans: SavedPlan[];
+  transactions: Transaction[];
+  transactionsLoaded: boolean;
   setIncome: (value: number) => void;
   setExpenses: (expenses: Expense[]) => void;
   addGoal: (goal: Goal) => void;
@@ -17,6 +20,10 @@ export interface FinancialContextType {
   saveCurrentPlan: (name: string) => void;
   restorePlan: (planId: string) => void;
   deleteSavedPlan: (planId: string) => void;
+  addTransaction: (transaction: Transaction) => Promise<void>;
+  updateTransaction: (transaction: Transaction) => Promise<void>;
+  deleteTransaction: (id: string) => Promise<void>;
+  clearTransactions: () => Promise<void>;
   resetAll: () => void;
 }
 
@@ -41,6 +48,26 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
   const [savedPlans, setSavedPlans] = useState<SavedPlan[]>(() => {
     return storage.getItem<SavedPlan[]>(STORAGE_KEYS.SAVED_PLANS) ?? [];
   });
+
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactionsLoaded, setTransactionsLoaded] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    db.getAll<Transaction>()
+      .then((items) => {
+        if (!cancelled) {
+          setTransactions(items.sort((a, b) => (a.date < b.date ? 1 : -1)));
+        }
+      })
+      .catch((e) => console.error('Failed to load transactions', e))
+      .finally(() => {
+        if (!cancelled) setTransactionsLoaded(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     storage.setItem(STORAGE_KEYS.MONTHLY_DATA, monthlyData);
@@ -117,6 +144,30 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
     setSettings(defaultSettings);
   }, []);
 
+  const addTransaction = useCallback(async (transaction: Transaction) => {
+    await db.put(transaction);
+    setTransactions((prev) =>
+      [...prev, transaction].sort((a, b) => (a.date < b.date ? 1 : -1)),
+    );
+  }, []);
+
+  const updateTransaction = useCallback(async (transaction: Transaction) => {
+    await db.put(transaction);
+    setTransactions((prev) =>
+      prev.map((t) => (t.id === transaction.id ? transaction : t)).sort((a, b) => (a.date < b.date ? 1 : -1)),
+    );
+  }, []);
+
+  const deleteTransaction = useCallback(async (id: string) => {
+    await db.delete(id);
+    setTransactions((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
+  const clearTransactions = useCallback(async () => {
+    await db.clear();
+    setTransactions([]);
+  }, []);
+
   return (
     <FinancialContext.Provider
       value={{
@@ -124,6 +175,8 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
         goals,
         settings,
         savedPlans,
+        transactions,
+        transactionsLoaded,
         setIncome,
         setExpenses,
         addGoal,
@@ -133,6 +186,10 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
         saveCurrentPlan,
         restorePlan,
         deleteSavedPlan,
+        addTransaction,
+        updateTransaction,
+        deleteTransaction,
+        clearTransactions,
         resetAll,
       }}
     >

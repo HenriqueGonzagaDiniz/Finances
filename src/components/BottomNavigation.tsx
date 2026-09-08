@@ -11,12 +11,12 @@ const navItems: NavItem[] = [
   { icon: 'home', label: 'Home', path: '/dashboard', activeIcon: 'home' },
   {
     icon: 'account_balance_wallet',
-    label: 'Budgets',
-    path: '/dashboard',
+    label: 'Transações',
+    path: '/transactions',
     activeIcon: 'account_balance_wallet',
   },
-  { icon: 'potted_plant', label: 'Savings', path: '/dashboard' },
-  { icon: 'settings', label: 'Settings', path: '/dashboard' },
+  { icon: 'potted_plant', label: 'Metas', path: '/dashboard' },
+  { icon: 'settings', label: 'Ajustes', path: '/dashboard' },
 ];
 
 export function BottomNavigation() {
