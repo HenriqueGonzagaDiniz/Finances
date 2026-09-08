@@ -15,6 +15,7 @@ import {
   sumIncome,
   sumExpenses,
   monthLabel,
+  groupByCategory,
 } from '@/utils/transactions';
 
 export default function Dashboard() {
@@ -28,6 +29,7 @@ export default function Dashboard() {
     resetAll,
     transactions,
     transactionsLoaded,
+    budgets,
   } = useFinancial();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -42,6 +44,22 @@ export default function Dashboard() {
   const monthIncome = useMemo(() => sumIncome(monthTx), [monthTx]);
   const monthExpenses = useMemo(() => sumExpenses(monthTx), [monthTx]);
   const monthBalance = monthIncome - monthExpenses;
+
+  const spendingByCategory = useMemo(() => groupByCategory(monthTx), [monthTx]);
+  const budgetAlerts = useMemo(() => {
+    if (budgets.length === 0) return [];
+    const alerts: Array<{ category: string; limit: number; spent: number; pct: number; over: boolean }> =
+      [];
+    for (const b of budgets) {
+      const spent = spendingByCategory.get(b.category)?.total ?? 0;
+      if (b.limit <= 0) continue;
+      const pct = (spent / b.limit) * 100;
+      if (pct >= 80) {
+        alerts.push({ category: b.category, limit: b.limit, spent, pct, over: spent > b.limit });
+      }
+    }
+    return alerts.sort((a, b) => b.pct - a.pct);
+  }, [budgets, spendingByCategory]);
 
   return (
     <>
@@ -210,6 +228,60 @@ export default function Dashboard() {
         </p>
       </section>
 
+      {budgetAlerts.length > 0 && transactionsLoaded && (
+        <section className="mb-md">
+          <div className="flex items-center justify-between mb-sm">
+            <h3 className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+              Alertas de orçamento
+            </h3>
+            <button
+              onClick={() => navigate('/budgets')}
+              className="font-label-sm text-label-sm text-primary flex items-center gap-1"
+            >
+              Ajustar
+              <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+          <div className="space-y-2">
+            {budgetAlerts.map((a) => (
+              <div
+                key={a.category}
+                className={`rounded-xl p-sm flex items-center gap-3 ${
+                  a.over ? 'bg-error-container/30' : 'bg-tertiary/10'
+                }`}
+              >
+                <span
+                  className={`material-symbols-outlined text-body-md ${
+                    a.over ? 'text-error' : 'text-tertiary'
+                  }`}
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  {a.over ? 'warning' : 'info'}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between items-center">
+                    <span className="font-label-md text-label-md text-on-surface">{a.category}</span>
+                    <span
+                      className={`font-label-sm text-label-sm ${
+                        a.over ? 'text-error' : 'text-tertiary'
+                      }`}
+                    >
+                      {a.over ? 'Estourou' : `${Math.round(a.pct)}% do limite`}
+                    </span>
+                  </div>
+                  <div className="mt-1">
+                    <ProgressBar value={Math.min(100, a.pct)} tint={a.over ? 'error' : 'tertiary'} />
+                  </div>
+                  <span className="font-label-sm text-label-sm text-on-surface-variant">
+                    {formatCurrency(a.spent)} de {formatCurrency(a.limit)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {mainGoal && (
         <section className="mb-md">
           <div
@@ -281,9 +353,25 @@ export default function Dashboard() {
         </section>
       )}
 
-      {mainGoal ? (
+      {goals.length > 0 ? (
         <section className="mt-md">
-          <GoalCard goal={mainGoal} monthlySaving={summary.monthlySavingCapacity} />
+          <div className="flex items-center justify-between mb-sm">
+            <h3 className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">
+              Suas metas
+            </h3>
+            <button
+              onClick={() => navigate('/goals')}
+              className="font-label-sm text-label-sm text-primary flex items-center gap-1"
+            >
+              Ver todas
+              <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+          </div>
+          <div className="space-y-3">
+            {goals.slice(0, 3).map((goal) => (
+              <GoalCard key={goal.id} goal={goal} monthlySaving={goal.monthlySavingCapacity} />
+            ))}
+          </div>
         </section>
       ) : (
         <section className="mt-md">

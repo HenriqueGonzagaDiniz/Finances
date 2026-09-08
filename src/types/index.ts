@@ -60,6 +60,12 @@ export interface FinancialSummary {
   estimatedMonthsToGoal: number;
 }
 
+export interface Budget {
+  category: string;
+  limit: number;
+  icon?: string;
+}
+
 export interface AppSettings {
   onboardingCompleted: boolean;
 }

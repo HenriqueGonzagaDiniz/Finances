@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useCallback, type ReactNode } from 'react';
-import type { MonthlyData, Goal, AppSettings, Expense, SavedPlan, Transaction } from '@/types';
+import type { MonthlyData, Goal, AppSettings, Expense, SavedPlan, Transaction, Budget } from '@/types';
 import { storage } from '@/services/storage';
 import { db } from '@/services/db';
 import { STORAGE_KEYS } from '@/constants';
@@ -11,11 +11,13 @@ export interface FinancialContextType {
   savedPlans: SavedPlan[];
   transactions: Transaction[];
   transactionsLoaded: boolean;
+  budgets: Budget[];
   setIncome: (value: number) => void;
   setExpenses: (expenses: Expense[]) => void;
   addGoal: (goal: Goal) => void;
   removeGoal: (id: string) => void;
   updateGoal: (goal: Goal) => void;
+  setBudgets: (budgets: Budget[]) => void;
   completeOnboarding: () => void;
   saveCurrentPlan: (name: string) => void;
   restorePlan: (planId: string) => void;
@@ -47,6 +49,10 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
 
   const [savedPlans, setSavedPlans] = useState<SavedPlan[]>(() => {
     return storage.getItem<SavedPlan[]>(STORAGE_KEYS.SAVED_PLANS) ?? [];
+  });
+
+  const [budgets, setBudgetsState] = useState<Budget[]>(() => {
+    return storage.getItem<Budget[]>(STORAGE_KEYS.BUDGETS) ?? [];
   });
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -84,6 +90,10 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     storage.setItem(STORAGE_KEYS.SAVED_PLANS, savedPlans);
   }, [savedPlans]);
+
+  useEffect(() => {
+    storage.setItem(STORAGE_KEYS.BUDGETS, budgets);
+  }, [budgets]);
 
   const setIncome = useCallback((value: number) => {
     setMonthlyData((prev) => ({ ...prev, income: value }));
@@ -137,6 +147,10 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
     setSavedPlans((prev) => prev.filter((p) => p.id !== planId));
   }, []);
 
+  const setBudgets = useCallback((budgets: Budget[]) => {
+    setBudgetsState(budgets);
+  }, []);
+
   const resetAll = useCallback(() => {
     storage.clearAll();
     setMonthlyData(defaultMonthlyData);
@@ -177,11 +191,13 @@ export function FinancialProvider({ children }: { children: ReactNode }) {
         savedPlans,
         transactions,
         transactionsLoaded,
+        budgets,
         setIncome,
         setExpenses,
         addGoal,
         removeGoal,
         updateGoal,
+        setBudgets,
         completeOnboarding,
         saveCurrentPlan,
         restorePlan,

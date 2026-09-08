@@ -32,4 +32,5 @@ export const STORAGE_KEYS = {
   GOALS: '@finances:goals',
   SETTINGS: '@finances:settings',
   SAVED_PLANS: '@finances:saved_plans',
+  BUDGETS: '@finances:budgets',
 } as const;

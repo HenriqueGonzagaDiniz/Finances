@@ -15,8 +15,8 @@ const navItems: NavItem[] = [
     path: '/transactions',
     activeIcon: 'account_balance_wallet',
   },
-  { icon: 'potted_plant', label: 'Metas', path: '/dashboard' },
-  { icon: 'settings', label: 'Ajustes', path: '/dashboard' },
+  { icon: 'potted_plant', label: 'Metas', path: '/goals' },
+  { icon: 'account_balance_wallet', label: 'Orçamentos', path: '/budgets' },
 ];
 
 export function BottomNavigation() {
