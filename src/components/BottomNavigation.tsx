@@ -25,7 +25,7 @@ export function BottomNavigation() {
   const navigate = useNavigate();
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface/80 backdrop-blur-md shadow-[0_-4px_20px_rgba(46,125,50,0.05)] rounded-t-xl">
+    <nav className="md:hidden fixed bottom-0 left-0 w-full z-40 flex justify-around items-center px-4 py-3 pb-safe bg-surface/80 backdrop-blur-md shadow-[0_-4px_20px_rgba(46,125,50,0.05)] rounded-t-xl">
       {navItems.map((item) => {
         const isActive = location.pathname === item.path;
         return (

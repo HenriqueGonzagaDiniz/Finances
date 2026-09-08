@@ -203,8 +203,8 @@ export default function Transactions() {
 
       {formOpen && (
         <>
-          <div className="fixed inset-0 bg-black/30 z-40" onClick={() => setFormOpen(false)} />
-          <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50 bg-surface rounded-t-2xl shadow-2xl max-h-[85vh] overflow-y-auto pb-safe">
+          <div className="fixed inset-0 bg-black/30 z-[55]" onClick={() => setFormOpen(false)} />
+          <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-[60] bg-surface rounded-t-2xl shadow-2xl max-h-[85vh] overflow-y-auto pb-safe">
             <div className="w-10 h-1 bg-outline-variant rounded-full mx-auto mt-3 mb-4" />
             <TransactionForm
               initial={editing}
@@ -220,7 +220,7 @@ export default function Transactions() {
 
       <button
         onClick={openCreate}
-        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-primary text-on-primary shadow-[0_8px_24px_rgba(13,99,27,0.3)] flex items-center justify-center transition-all active:scale-90 z-40"
+        className="fixed bottom-24 right-6 w-14 h-14 rounded-full bg-primary text-on-primary shadow-[0_8px_24px_rgba(13,99,27,0.3)] flex items-center justify-center transition-all active:scale-90 z-50"
         aria-label="Adicionar transação"
       >
         <span className="material-symbols-outlined text-[28px]">add</span>
