@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Finances - Bem-vindo</title>
+<!-- Google Fonts: Inter for the Brand Identity -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#bdcabe",
+                    "on-surface": "#191c1b",
+                    "secondary-fixed-dim": "#90d792",
+                    "surface-variant": "#e1e3e1",
+                    "surface-container-highest": "#e1e3e1",
+                    "background": "#f8faf8",
+                    "tertiary-fixed": "#d9e6da",
+                    "surface-tint": "#1b6d24",
+                    "secondary-fixed": "#abf4ac",
+                    "on-tertiary-container": "#e8f5e9",
+                    "primary": "#0d631b",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#4d5950",
+                    "surface": "#f8faf8",
+                    "on-tertiary-fixed-variant": "#3e4a41",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#88d982",
+                    "surface-container": "#eceeec",
+                    "on-primary-fixed-variant": "#005312",
+                    "inverse-primary": "#88d982",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f2f4f2",
+                    "on-secondary-container": "#2e7238",
+                    "surface-dim": "#d8dad9",
+                    "secondary-container": "#abf4ac",
+                    "surface-bright": "#f8faf8",
+                    "on-secondary-fixed-variant": "#07521d",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed": "#002204",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2e3130",
+                    "inverse-on-surface": "#eff1ef",
+                    "primary-fixed": "#a3f69c",
+                    "on-primary-container": "#cbffc2",
+                    "on-surface-variant": "#40493d",
+                    "tertiary-container": "#657167",
+                    "outline-variant": "#bfcaba",
+                    "on-background": "#191c1b",
+                    "secondary": "#286b33",
+                    "primary-container": "#2e7d32",
+                    "surface-container-high": "#e6e9e7",
+                    "on-tertiary-fixed": "#131e17",
+                    "on-secondary-fixed": "#002107",
+                    "outline": "#707a6c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "lg": "40px",
+                    "container-margin": "20px",
+                    "base": "8px",
+                    "xl": "64px",
+                    "md": "24px",
+                    "xs": "4px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Subtle atmospheric gradient movement */
+        .bg-mesh {
+            background-color: #f8faf8;
+            background-image: 
+                radial-gradient(at 100% 0%, #e8f5e9 0px, transparent 50%),
+                radial-gradient(at 0% 100%, #f1f8f1 0px, transparent 50%);
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-mesh text-on-surface min-h-screen flex flex-col items-center justify-between overflow-x-hidden">
+<!-- Top Spacer for Onboarding (No TopAppBar on Onboarding screens) -->
+<div class="h-16 w-full"></div>
+<main class="flex-1 flex flex-col items-center justify-center px-container-margin w-full max-w-md text-center">
+<!-- Logo Section -->
+<div class="mb-xl fade-in" style="animation-delay: 0.1s;">
+<div class="relative w-48 h-48 md:w-56 md:h-56 mx-auto">
+<!-- Background glow for the logo -->
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl"></div>
+<img alt="Finances Logo" class="relative z-10 w-full h-full object-contain drop-shadow-sm transform hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0C6hnLTRMS6x_-7w3ktAUH-TIZ86-sHNrNOGZnxM4GjR4WyXpeLssRAGXIjvoop_W-luZsOmUEFdnWQS0D9rEVNIwKkvmbfKnNKT78_3LMvfXs4giXS2e9nmZaoKD-ue2Z69xd_U6dMp5AtBI748YOuS98v6dQAyaHNB-1lIPvgte3QVL2-lbslpRK5PY-S8plRjh928WSWfkUCOlg6NEfWyKqD9DzVzRzeaHbwly1s7RgsLqQD9S1_JTPtEGQfgjoCLSXMHfGuF2"/>
+</div>
+</div>
+<!-- Headline Section -->
+<div class="space-y-md fade-in" style="animation-delay: 0.3s;">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface tracking-tight leading-tight">
+                Vamos descobrir o melhor equilíbrio entre gastar e economizar.
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px] mx-auto opacity-80">
+                Uma jornada mindful para organizar sua vida financeira com clareza e paz.
+            </p>
+</div>
+<!-- Visual Anchor: Simple Progress/Mindfulness Dots -->
+<div class="flex gap-2 mt-lg fade-in" style="animation-delay: 0.4s;">
+<div class="w-8 h-2 rounded-full bg-primary-container"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+</main>
+<!-- Fixed Action Section at Bottom -->
+<footer class="w-full px-container-margin pb-xl pt-lg max-w-md fade-in" style="animation-delay: 0.5s;">
+<button class="w-full h-[56px] bg-primary-container text-on-primary font-bold text-body-lg rounded-xl shadow-[0_8px_24px_rgba(13,99,27,0.15)] hover:bg-primary transition-all active:scale-95 flex items-center justify-center gap-2" id="getStartedBtn">
+            Começar
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="mt-md text-center font-label-md text-label-md text-on-surface-variant">
+            Já tem uma conta? <a class="text-primary font-bold hover:underline" href="#">Entrar</a>
+</p>
+</footer>
+<!-- Decorative Organic Element (Bento-style background hint) -->
+<div class="fixed -bottom-24 -left-24 w-64 h-64 bg-secondary-container/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="fixed -top-12 -right-12 w-48 h-48 bg-tertiary-fixed-dim/20 rounded-full blur-3xl pointer-events-none"></div>
+<script>
+        // Micro-interactions
+        const button = document.getElementById('getStartedBtn');
+        button.addEventListener('mouseenter', () => {
+            // Subtle movement or feedback could be added here
+        });
+
+        // Suppression of global shells for Onboarding as per Semantic Shell Mandate
+        // This screen is "Transactional/Onboarding" so TopAppBar and BottomNavBar are excluded.
+    </script>
+</body></html>

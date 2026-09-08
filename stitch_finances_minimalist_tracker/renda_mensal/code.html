@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Finances - Renda Mensal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed-dim": "#bdcabe",
+                      "on-surface": "#191c1b",
+                      "secondary-fixed-dim": "#90d792",
+                      "surface-variant": "#e1e3e1",
+                      "surface-container-highest": "#e1e3e1",
+                      "background": "#f8faf8",
+                      "tertiary-fixed": "#d9e6da",
+                      "surface-tint": "#1b6d24",
+                      "secondary-fixed": "#abf4ac",
+                      "on-tertiary-container": "#e8f5e9",
+                      "primary": "#0d631b",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "on-secondary": "#ffffff",
+                      "tertiary": "#4d5950",
+                      "surface": "#f8faf8",
+                      "on-tertiary-fixed-variant": "#3e4a41",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#88d982",
+                      "surface-container": "#eceeec",
+                      "on-primary-fixed-variant": "#005312",
+                      "inverse-primary": "#88d982",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#f2f4f2",
+                      "on-secondary-container": "#2e7238",
+                      "surface-dim": "#d8dad9",
+                      "secondary-container": "#abf4ac",
+                      "surface-bright": "#f8faf8",
+                      "on-secondary-fixed-variant": "#07521d",
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#002204",
+                      "on-tertiary": "#ffffff",
+                      "inverse-surface": "#2e3130",
+                      "inverse-on-surface": "#eff1ef",
+                      "primary-fixed": "#a3f69c",
+                      "on-primary-container": "#cbffc2",
+                      "on-surface-variant": "#40493d",
+                      "tertiary-container": "#657167",
+                      "outline-variant": "#bfcaba",
+                      "on-background": "#191c1b",
+                      "secondary": "#286b33",
+                      "primary-container": "#2e7d32",
+                      "surface-container-high": "#e6e9e7",
+                      "on-tertiary-fixed": "#131e17",
+                      "on-secondary-fixed": "#002107",
+                      "outline": "#707a6c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "12px",
+                      "lg": "40px",
+                      "container-margin": "20px",
+                      "base": "8px",
+                      "xl": "64px",
+                      "md": "24px",
+                      "xs": "4px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-md": ["Inter"],
+                      "display": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f8faf8;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .currency-input::placeholder {
+            color: #bfcaba;
+        }
+        /* Custom micro-interaction for the input focus */
+        .input-focus-ring:focus-within {
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+        }
+        /* Subtle fade-in for the content */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center">
+<!-- Top Navigation Anchor (TopAppBar style but for sub-page) -->
+<header class="w-full top-0 sticky z-50 bg-surface flex items-center justify-between px-container-margin h-16">
+<button aria-label="Voltar" class="text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">savings</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">Finances</span>
+</div>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<main class="flex-1 w-full max-w-md px-container-margin flex flex-col justify-between py-md fade-in">
+<!-- Progress Indicator -->
+<section class="mb-lg">
+<div class="flex justify-between items-center mb-base">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Passo 1 de 4</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Renda</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container w-[25%] transition-all duration-700 ease-out"></div>
+</div>
+</section>
+<!-- Question & Branding Imagery Area -->
+<section class="flex-1 flex flex-col">
+<div class="mb-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-sm">
+                    Qual é sua renda mensal?
+                </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    O valor que você recebe livre por mês.
+                </p>
+</div>
+<!-- Currency Input Section -->
+<div class="space-y-md">
+<div class="input-focus-ring group bg-surface-container-low border-2 border-transparent focus-within:border-primary-container focus-within:bg-white rounded-xl p-md transition-all duration-300">
+<label class="font-label-md text-label-md text-on-surface-variant mb-xs block" for="income">Renda líquida</label>
+<div class="flex items-center">
+<span class="font-display text-display text-primary-container mr-sm">R$</span>
+<input class="currency-input w-full bg-transparent border-none focus:ring-0 font-display text-display text-on-surface p-0 placeholder-surface-variant" id="income" inputmode="numeric" placeholder="0,00" type="text"/>
+</div>
+</div>
+<!-- Visual Cue / Decorative Card -->
+<div class="bg-surface-container-highest/30 rounded-xl p-md flex items-start gap-md border border-outline-variant/30">
+<div class="bg-secondary-container p-sm rounded-lg">
+<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">info</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant leading-relaxed">
+                        Sua renda ajuda a definir limites saudáveis para seus gastos essenciais e estilo de vida.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Action Button -->
+<section class="mt-xl pb-safe">
+<button class="w-full h-14 bg-primary-container text-on-primary hover:bg-primary transition-all duration-300 font-headline-md text-headline-md rounded-xl shadow-lg shadow-primary-container/20 active:scale-[0.98]">
+                Continuar
+            </button>
+<p class="text-center mt-md font-label-sm text-label-sm text-on-surface-variant px-lg">
+                Você poderá ajustar este valor a qualquer momento em suas configurações.
+            </p>
+</section>
+</main>
+<!-- Background Decoration (Subtle Atmospheric Gradient) -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] right-[-10%] w-[50%] h-[40%] bg-secondary-fixed/10 blur-[100px] rounded-full"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[60%] h-[50%] bg-primary-fixed/5 blur-[120px] rounded-full"></div>
+</div>
+<script>
+        // Simple micro-interaction for currency formatting
+        const input = document.getElementById('income');
+        input.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value === '') {
+                e.target.value = '';
+                return;
+            }
+            let formattedValue = (parseInt(value) / 100).toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            e.target.value = formattedValue;
+        });
+
+        // Focus input on load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                input.focus();
+            }, 500);
+        });
+    </script>
+</body></html>
