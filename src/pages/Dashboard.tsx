@@ -282,6 +282,26 @@ export default function Dashboard() {
         </section>
       )}
 
+      {transactionsLoaded && transactions.length > 0 && (
+        <button
+          onClick={() => navigate('/statistics')}
+          className="w-full mb-md flex items-center justify-between bg-surface-container-lowest rounded-xl p-md ambient-shadow border border-surface-container transition-colors hover:bg-surface-container-low"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <span className="material-symbols-outlined text-primary">bar_chart</span>
+            </div>
+            <div className="text-left">
+              <span className="font-label-md text-label-md text-on-surface block">Análises</span>
+              <span className="font-label-sm text-label-sm text-on-surface-variant">
+                Gráficos e tendências
+              </span>
+            </div>
+          </div>
+          <span className="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+        </button>
+      )}
+
       {mainGoal && (
         <section className="mb-md">
           <div
