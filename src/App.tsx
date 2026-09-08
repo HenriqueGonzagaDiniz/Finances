@@ -13,6 +13,7 @@ const Transactions = lazy(() => import('@/pages/Transactions'));
 const GoalsPage = lazy(() => import('@/pages/GoalsPage'));
 const BudgetsPage = lazy(() => import('@/pages/BudgetsPage'));
 const StatisticsPage = lazy(() => import('@/pages/StatisticsPage'));
+const SettingsPage = lazy(() => import('@/pages/SettingsPage'));
 
 function PageLoader() {
   return (
@@ -95,6 +96,14 @@ export function App() {
               element={
                 <DashboardLayout>
                   <StatisticsPage />
+                </DashboardLayout>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <DashboardLayout>
+                  <SettingsPage />
                 </DashboardLayout>
               }
             />

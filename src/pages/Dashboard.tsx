@@ -206,12 +206,22 @@ export default function Dashboard() {
       <Header
         title="Finances"
         rightAction={
-          <button
-            onClick={() => setMenuOpen(true)}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors"
-          >
-            <span className="material-symbols-outlined text-primary">menu</span>
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => navigate('/settings')}
+              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors"
+              aria-label="Ajustes"
+            >
+              <span className="material-symbols-outlined text-on-surface-variant">settings</span>
+            </button>
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors"
+              aria-label="Menu"
+            >
+              <span className="material-symbols-outlined text-primary">menu</span>
+            </button>
+          </div>
         }
       />
 
@@ -627,11 +637,11 @@ export default function Dashboard() {
       )}
 
       <section className="mt-lg">
-        <Button onClick={() => navigate('/')} icon="check_circle">
-          Confirmar Plano
+        <Button onClick={() => navigate('/transactions')} icon="receipt_long">
+          Registrar transações
         </Button>
         <p className="text-center font-label-md text-on-surface-variant mt-sm">
-          Você pode ajustar as metas a qualquer momento.
+          Acompanhe seus gastos reais para manter seu plano em dia.
         </p>
       </section>
     </>
